@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>map weakMap</title>
+</head>
+<body>
+    <script>
+    // Map 和 WeakMap的区别
+    const map = new Map();
+    const weakMap = new WeakMap();
+
+    // 自执行函数
+    (function () {
+        const foo = {foo: 1};
+        const bar = {bar: 1};
+        map.set(foo, 1);
+        weakMap.set(bar, 1);
+    })();
+    const iterator = map.keys();
+    console.log(iterator.next().value);
+
+    // console.log(weakMap.has(bar));
+    //console.log('map', Reflect.ownKeys(map));
+
+    </script>
+</body>
+</html>

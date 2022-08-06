@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 500px;
+            height: 80px;
+            border: 2px solid yellowgreen;
+        }
+
+        .left {
+            width: 0px;
+            height: 80px;
+            background-color: pink;
+            float: left;
+        }
+
+        .gap {
+            width: 100px;
+            height: 80px;
+            text-align: center;
+            line-height: 80px;
+            background-color: skyblue;
+            float: left;
+
+        }
+
+        input {
+            width: 420px;
+            height: 80px;
+            position: absolute;
+            top: 9px;
+            left: 44px;
+            opacity: 0.1;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="left"></div>
+        <div class="gap">》》》</div>
+    </div>
+    <input type="range" value="0" class="move">
+    <script>
+        var fn = () => {
+            var box = document.querySelector(".box");
+            var gap = document.querySelector(".gap");
+            var leftColor = document.querySelector(".left");
+            var ipt = document.querySelector(".move");
+
+            // 获取容器的宽度
+            var boxWidth = parseInt(window.getComputedStyle(box, null)["width"]);
+            //获取滑块的宽度
+            var gapWidth = parseInt(window.getComputedStyle(gap, null)["width"]);
+            ipt.oninput = function () {
+                leftColor.style.width = (boxWidth - gapWidth) * ipt.value / 100 + "px";
+
+                if (leftColor.style.width == "400px") {
+                    alert("验证成功");
+                }
+                 // 存在bug 该算法是将宽度分为100份，一份一份的修改，不能做到具体的值。下面代码永不会执行到，所以怎么解决该问题？
+                if (leftColor.style.width == ((boxWidth - gapWidth)+"px")) {
+                    alert("验证成功");
+                }
+            }
+        }
+        fn();
+    </script>
+</body>
+</html>

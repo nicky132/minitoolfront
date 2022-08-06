@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>navigator.getUserMedia</title>
+    <style>
+    video.local { transform: rotateY(180deg); }
+    </style>
+</head>
+<body>
+
+<video autoplay playsinline  id="player"></video>
+
+<button id="close">关闭摄像头</button>
+<button id="snapshot">截图图片</button>
+
+<canvas width="600px" height="400px" id="picture"></canvas>
+
+
+
+<script>
+    let videoPlay = document.getElementById('player');
+    //获取button 和canvas 
+    let snapshot = document.getElementById('snapshot');
+    let close = document.getElementById('close');
+    let picture = document.getElementById('picture');
+    let mediaStreamTrack;
+    //音视频数据
+    function gotMediaStream(stream) {
+        mediaStreamTrack = typeof stream.stop === 'function' ? stream : stream.getTracks()[1];
+        videoPlay.srcObject = stream;  //将获取到的流赋给video标签
+    }
+    function handleError(err) {
+        console.log(err.name + " : " + err.message);
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        console.log("你的浏览器不支持getUserMedia");
+
+    } else {
+        var constraints = {
+            video: true,
+            audio: false
+        }
+        navigator.mediaDevices.getUserMedia(constraints)
+        .then(gotMediaStream)
+        .catch(handleError);
+    }
+    // 截取图像
+    snapshot.addEventListener('click', function() {
+        //将videoplay当作源使用drawImage截取一帧数据就实现拍照功能。
+        picture.getContext('2d').drawImage(videoPlay, 0, 0);
+    }, false);
+   // 关闭摄像头
+    close.addEventListener('click', function() {
+        mediaStreamTrack && mediaStreamTrack.stop();
+    }, false);
+</script>
+</body>
+</html>

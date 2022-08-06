@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>color-thief 图片提取色</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
+    <style>
+        .colorbox {
+            width: 400px;
+            height: 400px;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .one {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="box one" id="box1">
+            <img id="img1" width="730px" crossorigin="anonymous"
+            src="https://p1.music.126.net/vBdYHlt5KjRLApQipLl-Qw==/109951167577022653.jpg?imageView&quality=89" alt="">
+        </div>
+        
+        <div class="box" id="box2">
+            <img id="img2" width="730px" crossorigin="anonymous"
+            src="https://p1.music.126.net/xpmt-oBK9DDqF0Qy40wGXQ==/109951167575983177.jpg?imageView&quality=89" alt="">
+        </div>
+        
+    </div>
+    <script>
+        const colorThief = new ColorThief();
+        const img1 = document.querySelector('#img1');
+        const box1 = document.querySelector('#box1');
+        const getColorImg1=()=>{
+            let color = colorThief.getColor(img1);
+            //box.style.backgroundColor=`rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+            // box.style.backgroundImage = `linear-gradient(rgb(${color[0]}), rgb(${color[1]}), rgb(${color[2]})`;
+            box1.style.backgroundImage = `linear-gradient(360deg, rgba(${color[0]},${color[1]},${color[2]}, .8), rgba(${color[0]},${color[1]},${color[2]},.8))`;
+            
+            console.log(color)
+        }
+        if (img1.complete) {
+            getColorImg1();
+        } else {
+            img1.addEventListener('load', function () {
+                getColorImg1(); 
+            });
+        }
+    </script>
+
+
+
+
+    <script>
+        const img2 = document.querySelector('#img2');
+        const box2 = document.querySelector('#box2');
+        const getColorImg2=()=>{
+            let color = colorThief.getColor(img2);
+            //box.style.backgroundColor=`rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+            // box.style.backgroundImage = `linear-gradient(rgb(${color[0]}), rgb(${color[1]}), rgb(${color[2]})`;
+            box2.style.backgroundImage = `linear-gradient(360deg, rgba(${color[0]},${color[1]},${color[2]}, .8), rgba(${color[0]},${color[1]},${color[2]},.8))`;
+            console.log(color)
+        }
+        if (img2.complete) {
+            getColorImg2();
+        } else {
+            img2.addEventListener('load', function () {
+                getColorImg2(); 
+            });
+        }
+    </script>
+</body>
+</html>

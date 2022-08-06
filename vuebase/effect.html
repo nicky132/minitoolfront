@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>effect</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script>
+
+        let foo = 1;
+        const obj = {text: '大伟聊前端'};
+        // 副作用函数
+        function effect() {
+            // document.getElementById('test').innerText= '大伟聊前端';
+            document.getElementById('test').innerText= obj.text;
+            foo = 2;
+        }
+
+        // 下一步把obj变成响应式的数据
+        obj.text = '';    // 去执行effect函数
+
+        
+
+    </script>
+</body>
+</html>

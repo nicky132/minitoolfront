@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        * {
+            margin: 0 ;
+            padding: 0;
+        }
+        .wrap {
+            display: block;
+            width: 400px;
+            margin: 50px;
+            position: relative;
+            border: 1px solid #ccc;
+        
+        }
+
+        .small-box {
+            /* position: relative; */
+            z-index: 1;
+        }
+
+        .float-box {
+            display: none;
+            width: 160px;
+            height: 120px;
+            position: absolute;
+            background: #ffffcc;
+            border: 1px solid #ccc;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .mark {
+            position: absolute;
+            display: block;
+            width: 400px;
+            height: 225px;
+            background-color: #fff;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .small-img {
+            width: 400px;
+            display:block;
+        }
+
+
+        .big-box {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 460px;
+            width: 400px;
+            height: 300px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .big-box img {
+            position: absolute;
+            z-index: 5
+        }
+
+    </style>
+</head>
+
+<body>
+    
+    <div class="wrap">
+
+        <!-- 小图 -->
+        <div class="small-box">
+            <!-- 放大镜 -->
+            <div class="float-box">鼠标上去的蒙层部分</div>
+            <img src="./image/big.jpg" class='small-img'/>
+        </div>
+
+
+        <!-- 显示 -->
+        <div class="big-box">
+            <img class="big-img" src="./image/big.jpg"/>
+        </div>
+        
+    </div>
+</body>
+
+<script>
+
+window.onload = function () {
+
+    var objWrap = document.querySelector(".wrap");
+
+    var objSmallBox = document.querySelector(".small-box");
+    var smallImg = document.querySelector(".small-img");
+    var objFloatBox = document.querySelector(".float-box");
+
+
+    var objBigBox = document.querySelector(".big-box");
+    var objBigBoxImage = document.querySelector(".big-img");
+
+
+    //移入事件
+    smallImg.onmouseover = function () {
+        objFloatBox.style.display = "block"
+        objBigBox.style.display = "block"
+    }
+    //移出事件
+    smallImg.onmouseout = function () {
+        objFloatBox.style.display = "none"
+        objBigBox.style.display = "none"
+    }
+
+    //移动事件
+    smallImg.onmousemove = function (e) {
+
+        var left = e.clientX- objWrap.offsetLeft - objFloatBox.offsetWidth / 2;
+        var top = e.clientY - objWrap.offsetTop - objFloatBox.offsetHeight / 2;
+
+        console.log('--------left--------', left);
+        console.log('--------top--------', top);
+
+        if (left < 0) {
+            left = 0;
+        } else if (left > (objSmallBox.offsetWidth - objFloatBox.offsetWidth)) {      
+            left = objSmallBox.offsetWidth - objFloatBox.offsetWidth;
+        }  if (top < 0) {
+            top = 0;
+        } else if (top > (objSmallBox.offsetHeight - objFloatBox.offsetHeight))  {          
+            top = objSmallBox.offsetHeight - objFloatBox.offsetHeight;
+        }
+
+
+        /* 放大镜的位置 */
+        objFloatBox.style.left = left + "px"; 
+        objFloatBox.style.top = top + "px";
+
+
+
+        /* 计算百分比 */
+        var percentX = left / (objSmallBox.offsetWidth - objFloatBox.offsetWidth);
+        var percentY = top / (objSmallBox.offsetHeight - objFloatBox.offsetHeight);
+
+        console.log('objBigBoxImage.offsetWidth===',  objBigBoxImage.offsetWidth, objBigBox.offsetWidth);
+        /* 显示图片相对应位置 */
+        objBigBoxImage.style.left = - percentX * (objBigBoxImage.offsetWidth - objBigBox.offsetWidth) + "px";
+        objBigBoxImage.style.top = - percentY * (objBigBoxImage.offsetHeight - objBigBox.offsetHeight) + "px";
+    }
+}
+
+
+</script>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片懒加载</title>
+    <style type="text/css">
+    .imgWarp {
+        display: flex;
+        flex-direction: column;
+        margin-top: 1000px;
+    }
+    .lazyload {
+        margin-top: 30px;
+        display: inline-block;
+        width: 120px;
+        height: 120px;
+        position: relative;
+        }
+    .lazyload:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="imgWarp">
+    <img alt="加载"
+           class="lazyload"
+           src=""
+           data-origin="https://images.unsplash.com/photo-1638913970675-b5ec36292665?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxMXx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60">
+    <img alt="加载"
+           class="lazyload"
+           src=""
+           data-origin="https://images.unsplash.com/photo-1652594286350-47f2213f5c92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60">
+    <img alt="加载"
+           class="lazyload"
+           src=""
+           data-origin="https://images.unsplash.com/photo-1646370336237-31b23f41b695?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxOXx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60">
+
+      <img alt="加载"
+           class="lazyload"
+           src=""
+           data-origin="https://images.unsplash.com/photo-1652434893021-f6e0f51c9ea4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60">
+      <img alt="加载"
+           class="lazyload"
+           src=""
+           data-origin="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3617103641,169754897&fm=26&gp=0.jpg">
+      <img alt="加载"
+           class="lazyload"
+           src=""
+           data-origin="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2942419345,2278127334&fm=26&gp=0.jpg">
+    
+           
+        </div>
+
+<script type="text/javascript">
+function Observer () {
+    let images = document.querySelectorAll(".lazyload");
+    let observer = new IntersectionObserver(entries => {
+            entries.forEach(item => {
+                if (item.isIntersecting) {
+                    item.target.src = item.target.dataset.origin; // 开始加载图片,把data-origin的值放到src
+                    observer.unobserve(item.target); // 停止监听已开始加载的图片
+                }
+            });
+        },  
+        {
+            rootMargin: "0px 0px -100px 0px" // 交叉过视图的100，才开始派发事件
+        }
+    );
+    images.forEach(item => observer.observe(item));
+}
+Observer();
+</script>
+</body>
+</html>
+
+<script>
+
+
+
+const io = new IntersectionObserver(callback, options)
+io.observe(DOM)
+
+const options = {
+    root: null,
+    rootMargin: 0,
+    thresholds: 1,
+}
+
+const io1 = new IntersectionObserver(entries => {
+    console.log(entries)
+   // Do something
+}, options)
+
+
+const boxList = document.querySelectorAll('.box');
+
+var ioBox = new IntersectionObserver((entries) =>{
+    entries.forEach(item => {
+        // intersectionRatio === 1说明该元素完全暴露出来，符合业务需求
+        if (item.intersectionRatio === 1) {
+        // 。。。 运营数据埋点曝光代码
+        io.unobserve(item.target)
+        }
+    })
+}, {
+    root: null, // 默认是窗口可视区域
+    threshold: 1, // 阀值设为1，当只有比例达到1时才触发回调函数
+})
+// observe遍历监听所有box节点
+boxList.forEach(box => io.observe(box))
+
+
+
+
+</script>
+
+
+ 

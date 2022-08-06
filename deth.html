@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>debounce || throttle</title>
+</head>
+<body>
+    <script>
+        //  防抖: 
+        // 维护同一个timer
+        // 在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。
+
+        // var timer; 
+        // function debounce(fn, delay) {
+        //     clearTimeout(timer);
+        //     timer = setTimeout(function(){
+        //         fn();
+        //     }, delay);
+        // }
+        // function testDebounce() {
+        //     console.log('大伟聊前端');
+        // }
+        // document.onmousemove = () => {
+        //     debounce(testDebounce, 1000);
+        // }
+
+
+        // 函数节流：
+        // 每隔一段时间，只执行一次函数。
+        // var timer1
+        // function throttle(fn, delay) {
+        //     if (timer1) {
+        //         return;
+        //     }
+        //     timer1 = setTimeout(function () {
+        //         fn();
+        //         timer1 = null;
+        //     }, delay)
+        // }
+        // function testThrottle() {
+        //     console.log('大伟聊前端');
+        // }
+        // document.onmousemove = () => {
+        //     throttle(testThrottle, 1000);
+        // }
+
+        // 时间戳实现节流函数：
+        var previous = new Date();
+        function throttle2(fn, delay) {
+            var now = new Date();
+            if(now - previous > delay) {
+                fn();
+                previous = now;
+            }
+        }
+        // test
+        function testThrottle2(e, content) {
+            console.log('大伟聊前端2');
+        }
+        document.onmousemove = function (e) {
+            throttle2(testThrottle2, 1000);
+        }
+
+    </script>
+</body>
+</html>

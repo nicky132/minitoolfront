@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轮播图</title>
+    <style>
+        /* 
+        轮播图demo
+        */
+        .wrap {
+            
+            width:1200px;
+            height:400px;
+            margin:0px auto;
+            /* background-color:aquamarine; */
+            overflow: hidden;/*用于隐藏超出展示容器的内容部分*/
+        }
+        .wrap-img {
+            width:6000px;
+            height:400px;
+            margin:0px auto;
+            animation:text 10s infinite  linear;
+            font-size:0px;/*消除图片间隔*/
+            
+        }
+        .wrap-img img{
+            
+            width:1200px;
+            height:400px;
+            float:left;
+        }
+        @keyframes text {
+                    /*0%-20%是播放下一个图片，0%-10%是图片暂停的时间*/
+            0%, 10%{
+            
+                margin-left:0px;
+            }
+            20%,30%{
+            
+                margin-left:-1200px;
+            }
+            40%,50%{
+            
+                margin-left:-2400px;
+            }
+            60%,70%{
+            
+                margin-left:-3600px;
+            }
+            80%,90%{
+            
+                margin-left:-4800px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 创建外部展示容器 -->
+    <div class="wrap">
+        <!-- 创建图片存储容器 -->
+        <div class="wrap-img">
+            <!-- 引入轮播图图片 -->
+            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/787aa7b48a79ed5411fec2f1854f66bb.jpg?w=2452&h=920" alt=""/>
+            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/b717c9c84e44409496e993ed6b526c05.jpg?thumb=1&w=2452&h=920&f=webp&q=90" alt=""/>
+            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/b158441e01e7acd9ad27a49bbac4c0fa.jpg?thumb=1&w=2452&h=920&f=webp&q=90" alt=""/>
+            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/c6240d955a94333a05c3ce26817a15c7.jpg?thumb=1&w=2452&h=920&f=webp&q=90" alt=""/>
+            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/b158441e01e7acd9ad27a49bbac4c0fa.jpg?thumb=1&w=2452&h=920&f=webp&q=90" alt=""/>
+        </div>
+    </div>
+</body>
+</html>

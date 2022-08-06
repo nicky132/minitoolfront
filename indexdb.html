@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.js" integrity="sha512-uhGxZliQzrw9ep2yTwrHzbi+HjpvrxpqVCbuxf86KrjQehpBrfPpJ5H/TIiCf/5jDSmqA5zttGqX724CuWelGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<video style="width: 400px; height: 400px" controls></video>
+
+<body>
+    <script>
+        axios({
+            url: './image/test.mp4',
+            method: 'get',
+            responseType: 'blob' // 注意这里blob
+        }).then(result => {
+        this.start = new Date().getTime()
+        console.log(this.start, 'start save')
+        const number = 100						 
+        const setItemArray = []
+        const getItemArray = []
+        for (let i = 0; i < number; i++) {
+            setItemArray.push(localforage.setItem(`dawei-mp4${i}`, result?.data))
+        }
+        // 存储 100 次  因为我一个文件10m大小 
+        Promise.all(setItemArray).then(result => {
+            this.save = new Date().getTime()
+            console.log(this.save - this.start, 'total save time(save time - start time)')
+            for (let j = 0; j < number; j++) {
+                getItemArray.push(localforage.getItem(`dawei-mp4${j}`))
+            }
+            // 读取 100个视频 
+            Promise.all(getItemArray).then(value => {
+
+                // console.log(new Date().getTime() - this.start, 'read time(read time - start time)')
+                console.log(new Date().getTime() - this.save, 'read time(read time - save time)')
+                // console.log(value[value.length - 1] instanceof Blob, 'get')
+                
+                // 把 Blob 对象转成 ObjectURL，以便在页面显示视频
+                var video = document.getElementsByTagName('video')[0];
+                const URL = window.URL || window.webkitURL
+                const videoURL = URL.createObjectURL(value[value.length - 1])
+                // this.src = videoURL
+                video.src = videoURL;
+                video.load();
+                video.onloadeddata = function() {
+                    video.play();
+                }
+                console.log('videoURL=====', videoURL);
+            });
+        })
+        })
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

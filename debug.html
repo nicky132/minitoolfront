@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>debugger</title>
+    <script src="./js/x.js"></script>
+    <script src="./js/y.js"></script>
+    <script src="./js/z.js"></script>
+</head>
+<body>
+    <button class id="btn">click</button>
+
+    <div class=" x,a">  
+          <span class="a-xxx"></span>
+
+    </div>
+    <div class=" x, b">
+
+    </div>
+    <div class=" x, c"></div>
+
+    <script>
+        function a () {
+            console.log('a');
+            b();
+        }
+        function b () {
+            console.log('b');
+            c();
+        }
+        function c () {
+            console.log('c');
+            d();
+        }
+        function d () {
+            console.log('d');
+        }
+
+        window.onload = function (e) {
+            console.log('大伟聊前端');
+            const btn = document.querySelector('#btn');
+            btn.addEventListener('click', function () {
+                a();
+            });
+        }
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>upload文件上传</title>
+  <style>
+    .box{height:20px;width:200px;margin-top:20px;}
+    #progress{background:red;height:20px;border:1px solid #ccc;width:0;}
+  </style>
+</head>
+<body>
+    <h2>请选择要上传的文件：</h2>
+    <input type="file" id="file">
+    <div class="box">
+        <div id="progress"></div>
+    </div>
+
+    <h1 style="color:yellow;"></h1>
+</body>
+<script>
+    function $(select){
+        return document.querySelector(select);
+    }
+    $("#file").onchange = function(event){
+        
+        let file = event.target.files[0];  // 获取file对象
+        debugger;
+        let formData = new FormData();  // 新建formData对象
+
+        formData.append('file', file);  // 将file添加到formData传到后端
+
+        let xhr = new XMLHttpRequest(); // 新建ajax异步对象
+
+        xhr.setRequestHeader('Content-Type', 'multipart/form-data' );
+
+
+        xhr.open('post', '/');  // 打开ajax
+        // 监听ajax对象事件状态
+        xhr.onreadystatechange = function (){
+            if(xhr.readyState == 4 && xhr.status == 200){
+                $('h1').innerText = '上传成功！';
+            }
+        }
+
+        // 监听文件上传进度
+        xhr.upload.onprogress = function (ev){
+            if(ev.lengthComputable){
+                console.log(1);
+                let progress = ev.loaded/ev.total *100;
+                $('#progress').style.width = progress + '%';
+                $('#progress').innerText = progress + '%';
+            }
+        };
+
+        xhr.send(formData); // 发送ajax请求将formData对象发送过去
+    }
+
+</script>
+</html>

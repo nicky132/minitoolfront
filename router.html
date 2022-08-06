@@ -1,0 +1,84 @@
+<!-- hash-router.html -->
+<!-- author:刘伟C -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/hash-router.js"></script>
+    <title>模拟Vue-Router hash路由</title>
+</head>
+
+<body>
+    <div id="content">
+        <!-- 点击a标签进行hash路由跳转 -->
+        <a href="#/fronted">前端技术</a>
+        <a href="#/backend">后端技术</a>
+        <a href="#/rd">开发角色</a>
+
+        <!-- 切换的组件在这里渲染 -->
+        <div id="router-view">
+                    
+        </div>
+    </div>
+    <script type="text/javascript">
+        //template.js
+        let fronted=`
+            <li>Vue</li>
+            <li>React</li>
+            <li>Angular</li>`;
+        let backend=`
+            <li>Java</li>
+            <li>Spring-boot</li>
+            <li>Redis</li>
+            <li>Mysql</li>
+            <li>Kafka</li>
+            <li>Go</li>
+        `;
+        let rd=`
+            <p>前端</p>
+            <p>后端</p>
+            <p>pm</p>
+            <p>qa</p>
+            <p>Ux</p>
+        `;
+        /**
+         * 模拟组件数组
+         * @params {string} name 组件名字
+         * @params {template} component 组件模板
+         */
+        let components = [{
+                name: 'fronted',
+                component: fronted
+            },
+            {
+                name: 'backend',
+                component: backend
+            },
+            {
+                name: 'rd',
+                component: rd
+            },
+        ];
+
+        //新建一个路由集合
+        let routers = new router();
+        //为这个路由集合注册路由
+        routers.register({
+            path: '/fronted',
+            component: 'fronted'
+        });
+        routers.register({
+            path: '/backend',
+            component: 'backend'
+        });
+        routers.register({
+            path: '/rd',
+            component: 'rd'
+        });
+    </script>
+</body>
+
+</html>

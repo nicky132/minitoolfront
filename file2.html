@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>file</title>
+</head>
+<body>
+  <canvas width="980" height="500"></canvas>
+</body>
+<script>
+  let canvas = document.querySelector('canvas');
+  // async 自执行函数
+  (async () => {
+    let imgUrl = 'https://img2.baidu.com/it/u=1405034453,4094362351&fm=253&fmt=auto&app=138&f=JPEG?w=1000&h=500';
+    let ctx = canvas.getContext('2d');
+
+    let img = await fetchImg(imgUrl);
+    // 向 canvas 画布上下文绘制图片
+    ctx.drawImage(img, 0, 0)
+
+    // 获取图片 blob 对象
+    canvas.toBlob((blob) => {
+      console.log('blob: ', blob);
+      // let hiFile = new File([`<h1>Hi gauseen!<h1>`], 'fileName', { type: 'text/html' }); 
+      let hiFile = new File([ blob ], '图片', { type: 'image/png' });
+      console.log('hiFile----', hiFile);
+      //let hiBlob = new Blob([`<h1>Hi!<h1>`], { type: 'text/html' })
+      // console.log('hiBlob====',  hiBlob);
+    })
+
+    // 获取图片 dataURL，也是 base64 格式
+    let dataURL = canvas.toDataURL()
+      // console.log('dataURL: ', dataURL)
+  })()
+  
+  // 获取图片资源，封装成 promise
+  function fetchImg (url) {
+    return new Promise((resolve, reject) => {
+      let img = new Image()
+      // 跨域图片处理
+      img.crossOrigin = 'anonymous'
+      img.src = url
+      // 图片资源加载完成回调
+      img.onload = () => {
+        resolve(img)
+      }
+    })
+  }
+</script>
+</html>

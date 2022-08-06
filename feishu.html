@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /** Reset / Basic styling */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	color: #fff;
+	font-size: 2vmax;
+}
+
+h1 {
+	font-size: 4em;
+}
+
+/** Full Page Scroll-Snapping HTML Sections — https://codepen.io/bramus/pen/GRJGyGE */
+main {
+	height: 100vh;
+	width: 100vw;
+	scroll-snap-type: y mandatory;
+
+	/* To hide the panels that bleed out when they are translated */
+	overflow-x: hidden;
+}
+
+section {
+	height: 100vh;
+	width: 100%;
+	scroll-snap-align: center;
+
+	/* This is what makes the content stay in place, instead of scrolling out of view */
+	position: sticky;
+	top: 0;
+}
+
+.panelwrapper {
+	height: 100vh;
+	width: 100%;
+
+	/* To position the panels contained inside */
+	position: relative;
+}
+
+/** Panel Colors */
+.red .panel {
+	background: #f44336;
+}
+.orange .panel {
+	background: #ff9800;
+}
+.yellow .panel {
+	background: #ffd600;
+}
+.green .panel {
+	background: #4caf50;
+}
+.blue .panel {
+	background: #2196f3;
+}
+.indigo .panel {
+	background: #3f51b5;
+}
+.violet .panel {
+	background: #673ab7;
+}
+
+/* Panel Layout */
+.panel {
+	height: 100vh;
+	top: 0;
+	position: absolute;
+
+	padding: 4em;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.panel--normal {
+	width: 100vw;
+	left: 0;
+}
+
+.panel--left,
+.panel--right {
+	width: 50vw;
+}
+
+.panel--left {
+	left: 0;
+}
+
+.panel--right {
+	right: 0;
+}
+
+/* Show warning for older browser */
+.warning {
+	position: fixed;
+	bottom: 1em;
+	right: 1em;
+	left: 1em;
+	padding: 1em;
+	border: 1px solid black;
+	z-index: 9999;
+	text-align: center;
+	color: black;
+	background: rgba(255 255 225 / 0.9);
+}
+
+.warning a {
+	color: blue;
+}
+
+@supports (animation-timeline: works) {
+	/* Hide Warning */
+	.warning {
+		display: none;
+	}
+
+	@keyframes shrink-to-back {
+		from {
+			transform: scale(1);
+		}
+		to {
+			transform: scale(0.5);
+		}
+	}
+
+	@keyframes slide-in-from-left {
+		from {
+			transform: translateX(-100%) translateY(-100%);
+			box-shadow: 0 0 1em hsl(0deg 0% 0% / 0.5);
+		}
+		to {
+			transform: translateX(0) translateY(0%);
+			box-shadow: 0 0 1em hsl(0deg 0% 0% / 0);
+		}
+	}
+
+	@keyframes slide-in-from-right {
+		from {
+			transform: translateX(100%) translateY(-100%);
+			box-shadow: 0 0 1em hsl(0deg 0% 0% / 0.5);
+		}
+		to {
+			transform: translateX(0) translateY(0%);
+			box-shadow: 0 0 1em hsl(0deg 0% 0% / 0);
+		}
+	}
+
+	.panelwrapper {
+		transform-origin: 50% 50%;
+		animation: shrink-to-back 10s linear both;
+		animation-timeline: foo;
+	}
+
+	.panel--left {
+		animation: slide-in-from-left 10s linear both;
+		animation-timeline: foo;
+	}
+
+	.panel--right {
+		animation: slide-in-from-right 10s linear both;
+		animation-timeline: foo;
+	}
+
+	@scroll-timeline section_2_slides_into_wrapper {
+		source: selector(#main);
+		scroll-offsets: selector(#section_2) end 0, selector(#section_2) end 1;
+		
+		/* Legacy Descriptors Below: */
+		start: selector(#section_2) end 0;
+		end: selector(#section_2) end 1;
+		time-range: 10s;
+	}
+
+	#section_1 .panelwrapper,
+	#section_2 .panel {
+		animation-timeline: section_2_slides_into_wrapper;
+	}
+
+	@scroll-timeline section_3_slides_into_wrapper {
+		source: selector(#main);
+		scroll-offsets: selector(#section_3) end 0, selector(#section_3) end 1;
+		
+		/* Legacy Descriptors Below: */
+		start: selector(#section_3) end 0;
+		end: selector(#section_3) end 1;
+		time-range: 10s;
+	}
+
+	#section_2 .panelwrapper,
+	#section_3 .panel {
+		animation-timeline: section_3_slides_into_wrapper;
+	}
+
+	@scroll-timeline section_4_slides_into_wrapper {
+		source: selector(#main);
+		scroll-offsets: selector(#section_4) end 0, selector(#section_4) end 1;
+		
+		/* Legacy Descriptors Below: */
+		start: selector(#section_4) end 0;
+		end: selector(#section_4) end 1;
+		time-range: 10s;
+	}
+
+	#section_3 .panelwrapper,
+	#section_4 .panel {
+		animation-timeline: section_4_slides_into_wrapper;
+	}
+}
+
+    </style>
+</head>
+<body>
+    <main id="main">
+        <section class="red" id="section_1">
+            <div class="panelwrapper">
+                <div class="panel panel--normal">
+                    <h1>Red</h1>
+                    <h3>Excitement. Energy. Passion.</h3>
+                </div>
+            </div>
+        </section>
+    
+        <section class="orange" id="section_2">
+            <div class="panelwrapper">
+                <div class="panel panel--left"><h1>Orange</h1></div>
+                <div class="panel panel--right"><h3>Energy. Balance. Enthusiasm.</h3></div>
+            </div>
+        </section>
+    
+        <section class="yellow" id="section_3">
+            <div class="panelwrapper">
+                <div class="panel panel--left"><h1>Yellow</h1></div>
+                <div class="panel panel--right"><h3>Joy. Happiness. Sunshine.</h3></div>
+            </div>
+        </section>
+    
+        <section class="green" id="section_4">
+            <div class="panelwrapper">
+                <div class="panel panel--left"><h1>Green</h1></div>
+                <div class="panel panel--right"><h3>Nature. Environment. Healthy.</h3></div>
+            </div>
+        </section>
+    </main>
+    
+    <div class="warning">⚠️ Your browser does not support CSS Scroll-Linked Animations, so this demo won't work. If you're feeling adventurous use Chrome 89 with “Experimental Web Platform Features” enabled. Alternatively you can watch out a recording of this demo and read more about it in <a href="https://twitter.com/bramus/status/1440663180905119759" target="_top" rel="noopener noreferrer">this Twitter thread</a></div>
+</body>
+</html>
